@@ -1,0 +1,5 @@
+# Lint-only mechanical rule set. Vendored targets, bundled gems, release
+# artifacts, and docs are not ours to lint.
+--swiftversion 6.0
+--rules trailingSpace,linebreakAtEndOfFile,duplicateImports,semicolons,consecutiveSpaces
+--exclude DerivedData,.build,artifacts,notes,docs,fastlane,vendor,Packages/WhyTeaYouTube/.build,Packages/WhyTeaYouTube/Sources/YouTubeStreams,Packages/WhyTeaYouTube/Sources/YouTubeAPI
