@@ -12,8 +12,9 @@
 - Search with autocomplete suggestions and infinite scroll.
 - A watch screen with an AVKit player, title, channel, views, likes, an expandable description, related videos, and paged comments.
 - Open any YouTube link or video ID from a sheet (with a paste button) or through `whytea://<link-or-id>`.
+- An adaptive shell: a sidebar on iPad and a tab bar on iPhone, with each section keeping its own navigation stack, and Command-1 to Command-5 and Command-L shortcuts. Home, Following, Library, and Settings are placeholders for now.
 
-Everything runs on device. Playback prefers the adaptive HLS manifest from the iOS InnerTube client and falls back to the best natively playable muxed stream.
+Everything runs on device. Playback prefers the adaptive HLS manifest from the extractor's visionOS InnerTube client and falls back to the best natively playable muxed stream.
 
 Not built yet: sign-in and the account features that depend on it, background audio and Picture in Picture, and composing 1080p+ DASH video with separate audio when no HLS manifest is available. The logged-out home feed is empty, because YouTube shows nothing to a visitor with no history.
 
@@ -41,13 +42,17 @@ cd why-tea
 # Package tests (offline)
 swift test --package-path Packages/WhyTeaYouTube
 
+# Loopback fixture server and the mock client suite (no YouTube traffic)
+PYTHONPATH=Server/YouTubeMock python3 -m unittest discover -s Server/YouTubeMock/tests -p 'test_*.py'
+scripts/mock-youtube-test.sh
+
 # Live check against real YouTube: search, details, comments, and stream extraction
 WHYTEA_LIVE=1 swift test --package-path Packages/WhyTeaYouTube --filter LiveBakeOff
 
 open WhyTea.xcodeproj
 ```
 
-Select the `WhyTea` scheme, choose an iPhone or iPad simulator running iOS 27, and press Run.
+Select the `WhyTea` scheme, choose an iPhone or iPad simulator running iOS 27, and press Run. In a Debug build, the launch argument `-WhyTeaFixtures YES` serves the bundled fixture catalog instead of contacting YouTube.
 
 <details>
 <summary><strong>Running on a physical device</strong></summary>
@@ -60,9 +65,11 @@ Set your own Apple development team on the `WhyTea` target, and change the bundl
 
 | Area | What lives there |
 | --- | --- |
-| [`WhyTea/`](WhyTea/) | SwiftUI app: `App/`, `Routing/`, `Shared/`, and `Features/` (Search, Video, OpenLink) |
+| [`WhyTea/`](WhyTea/) | SwiftUI app: `App/`, `Routing/`, `Shared/` (including the fixture catalog), and `Features/` (Home, Following, Search, Library, Settings, Video, OpenLink) |
+| [`WhyTeaTests/`](WhyTeaTests/) | App unit tests for navigation, search, and video models, run against the in-process fixtures |
 | [`Packages/WhyTeaYouTube/`](Packages/WhyTeaYouTube/) | The `WhyTeaYouTube` facade, the two vendored libraries, and tests |
-| [`scripts/`](scripts/) | Vendoring helper |
+| [`Server/`](Server/) | A loopback-only fixture server for tests. It is not a relay: it binds to `127.0.0.1`, makes no outbound requests, and is never part of the app |
+| [`scripts/`](scripts/) | Vendoring helper and the mock-suite runner |
 
 The app uses SwiftUI, Observation, AVKit, and Swift Testing, with Swift 6 strict concurrency. It has no dependencies beyond the two vendored libraries.
 

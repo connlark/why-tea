@@ -11,5 +11,9 @@ xcuserdata/
 .swiftpm/
 Package.resolved
 
+# Python (Server/YouTubeMock tests)
+__pycache__/
+*.pyc
+
 # macOS
 .DS_Store

@@ -42,6 +42,27 @@ jobs:
         working-directory: Packages/WhyTeaYouTube
         run: swift test
 
+      - name: Run fixture server tests
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: Server/YouTubeMock
+        run: python3 -m unittest discover -s Server/YouTubeMock/tests -p 'test_*.py'
+
+      - name: Run mock client tests against the loopback fixture
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          WHYTEA_MOCK_LOG: ${{ runner.temp }}/whytea-mock-server.log
+        run: scripts/mock-youtube-test.sh
+
+      - name: Upload fixture-server failure evidence
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fixture-server-failure-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/whytea-mock-server.log
+          if-no-files-found: ignore
+          retention-days: 7
+
   app-build:
     name: App Build
     runs-on: xcode-27
