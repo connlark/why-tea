@@ -5,7 +5,12 @@ struct OpenLinkSheet: View {
     let onOpen: (VideoID) -> Void
 
     @Environment(\.dismiss) private var dismiss
-    @State private var text = ""
+    @State private var text: String
+
+    init(text: String = "", onOpen: @escaping (VideoID) -> Void) {
+        self.onOpen = onOpen
+        self.text = text
+    }
 
     private var videoID: VideoID? { VideoID(parsing: text) }
 

@@ -8,7 +8,7 @@ import YouTubeStreams
 ///
 /// Each call builds its own `YouTubeModel`; neither vendored model type is
 /// `Sendable`, so they never outlive the call that created them.
-public struct YouTubeClient: Sendable {
+public struct YouTubeClient: YouTubeService, Sendable {
     public init() {}
 
     @concurrent

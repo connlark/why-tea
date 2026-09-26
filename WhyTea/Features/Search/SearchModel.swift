@@ -11,15 +11,22 @@ final class SearchModel {
     private(set) var loadMoreError: String?
 
     @ObservationIgnored private var isLoadingMore = false
-    @ObservationIgnored private let client: YouTubeClient
+    /// The last submission that finished, successfully or not.
+    @ObservationIgnored private var settledSubmission: SearchSubmission?
+    @ObservationIgnored private let client: any YouTubeService
+    @ObservationIgnored private let suggestionDebounce: Duration
 
-    init(client: YouTubeClient = YouTubeClient()) {
+    init(client: any YouTubeService, suggestionDebounce: Duration = .milliseconds(250)) {
         self.client = client
+        self.suggestionDebounce = suggestionDebounce
     }
 
-    func search(_ term: String) async {
-        let term = term.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !term.isEmpty else { return }
+    /// Runs `submission` unless it already settled. The screen's task restarts
+    /// whenever Search reappears (a section switch or a pop back from a
+    /// video), and that must not reload results the person is looking at.
+    func search(_ submission: SearchSubmission) async {
+        let term = submission.query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !term.isEmpty, submission != settledSubmission else { return }
         results = .loading
         continuationToken = nil
         loadMoreError = nil
@@ -30,9 +37,11 @@ final class SearchModel {
             try Task.checkCancellation()
             results = .loaded(page.videos)
             continuationToken = page.continuationToken
-        } catch is CancellationError {
+            settledSubmission = submission
         } catch {
+            guard !error.isCancellation else { return }
             results = .failed(error.localizedDescription)
+            settledSubmission = submission
         }
     }
 
@@ -46,8 +55,8 @@ final class SearchModel {
             guard case .loaded(let current) = results else { return }
             results = .loaded(current.appendingUnique(page.videos))
             continuationToken = page.continuationToken
-        } catch is CancellationError {
         } catch {
+            guard !error.isCancellation else { return }
             loadMoreError = error.localizedDescription
         }
     }
@@ -63,7 +72,7 @@ final class SearchModel {
             return
         }
         do {
-            try await Task.sleep(for: .milliseconds(250))
+            try await Task.sleep(for: suggestionDebounce)
             let entries = try await client.suggestions(for: term)
             try Task.checkCancellation()
             suggestions = entries

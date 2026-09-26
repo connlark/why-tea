@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "home": ["wTeaMock00Q", "wTeaMock01g", "wTeaMock02o"],
+  "search": {
+    "whytea": ["wTeaMock00Q", "wTeaMock01g", "wTeaMock02o", "wTeaMock03w"],
+    "swiftui": ["wTeaMock00Q", "wTeaMock01g", "wTeaMock02o", "wTeaMock03w"]
+  },
+  "suggestions": {
+    "swiftui": ["swiftui navigation split view", "swiftui liquid glass", "swift concurrency"],
+    "youtube": ["youtube native client", "youtube swiftui", "youtube music"],
+    "default": ["swiftui", "native app", "apple design"]
+  },
+  "videos": {
+    "wTeaMock00Q": {
+      "summary": {
+        "id": "wTeaMock00Q",
+        "title": "WhyTea: A Native YouTube Client",
+        "channelName": "WhyTea Labs",
+        "channelID": "UCWhyTeaLabs",
+        "thumbnailPath": "/media/wTeaMock00Q/thumbnail.svg",
+        "durationText": "8:42",
+        "viewCountText": "1.2K views",
+        "publishedText": "2 days ago"
+      },
+      "details": {
+        "channelAvatarPath": "/media/wTeaMock00Q/thumbnail.svg",
+        "subscriberCountText": "12.4K subscribers",
+        "descriptionText": "A fixture video for deterministic WhyTea watch flows.",
+        "commentCountText": "3 comments",
+        "likeCountText": "98",
+        "commentsToken": "wTeaMock00Q:comments:0",
+        "related": ["wTeaMock01g", "wTeaMock02o"]
+      },
+      "comments": [
+        {
+          "id": "comment-whytea-001",
+          "authorName": "Fixture Viewer",
+          "authorAvatarPath": "/media/wTeaMock00Q/thumbnail.svg",
+          "text": "The deterministic player state is useful.",
+          "publishedText": "1 day ago",
+          "likeCountText": "7",
+          "replyCountText": "1"
+        },
+        {
+          "id": "comment-whytea-002",
+          "authorName": "Local Tester",
+          "authorAvatarPath": "/media/wTeaMock00Q/thumbnail.svg",
+          "text": "No live request needed for this screen.",
+          "publishedText": "18 hours ago",
+          "likeCountText": "3",
+          "replyCountText": "0"
+        },
+        {
+          "id": "comment-whytea-003",
+          "authorName": "SwiftUI Fan",
+          "authorAvatarPath": "/media/wTeaMock00Q/thumbnail.svg",
+          "text": "The iPad sidebar reads clearly.",
+          "publishedText": "3 hours ago",
+          "likeCountText": "2",
+          "replyCountText": "0"
+        }
+      ]
+    },
+    "wTeaMock01g": {
+      "summary": {
+        "id": "wTeaMock01g",
+        "title": "Building a Calm iPad Sidebar",
+        "channelName": "WhyTea Labs",
+        "channelID": "UCWhyTeaLabs",
+        "thumbnailPath": "/media/wTeaMock01g/thumbnail.svg",
+        "durationText": "5:18",
+        "viewCountText": "842 views",
+        "publishedText": "1 week ago"
+      },
+      "details": {
+        "channelAvatarPath": "/media/wTeaMock01g/thumbnail.svg",
+        "subscriberCountText": "12.4K subscribers",
+        "descriptionText": "A fixture detail with a related-video relationship.",
+        "commentCountText": "0 comments",
+        "likeCountText": "61",
+        "commentsToken": "wTeaMock01g:comments:0",
+        "related": ["wTeaMock00Q", "wTeaMock03w"]
+      },
+      "comments": []
+    },
+    "wTeaMock02o": {
+      "summary": {
+        "id": "wTeaMock02o",
+        "title": "Local-First Playback and PiP",
+        "channelName": "WhyTea Labs",
+        "channelID": "UCWhyTeaLabs",
+        "thumbnailPath": "/media/wTeaMock02o/thumbnail.svg",
+        "durationText": "11:03",
+        "viewCountText": "2.1K views",
+        "publishedText": "3 weeks ago"
+      },
+      "details": {
+        "channelAvatarPath": "/media/wTeaMock02o/thumbnail.svg",
+        "subscriberCountText": "12.4K subscribers",
+        "descriptionText": "A fixture for playback lifecycle, recovery, and resume tests.",
+        "commentCountText": "1 comment",
+        "likeCountText": "143",
+        "commentsToken": "wTeaMock02o:comments:0",
+        "related": ["wTeaMock00Q"]
+      },
+      "comments": [
+        {
+          "id": "comment-playback-001",
+          "authorName": "Playback Tester",
+          "authorAvatarPath": "/media/wTeaMock02o/thumbnail.svg",
+          "text": "Resume and failure states are reproducible.",
+          "publishedText": "5 days ago",
+          "likeCountText": "12",
+          "replyCountText": "0"
+        }
+      ]
+    },
+    "wTeaMock03w": {
+      "summary": {
+        "id": "wTeaMock03w",
+        "title": "Liquid Glass Used with Restraint",
+        "channelName": "WhyTea Labs",
+        "channelID": "UCWhyTeaLabs",
+        "thumbnailPath": "/media/wTeaMock03w/thumbnail.svg",
+        "durationText": "3:36",
+        "viewCountText": "515 views",
+        "publishedText": "1 month ago"
+      },
+      "details": {
+        "channelAvatarPath": "/media/wTeaMock03w/thumbnail.svg",
+        "subscriberCountText": "12.4K subscribers",
+        "descriptionText": "A fixture for empty and related-content states.",
+        "commentCountText": "0 comments",
+        "likeCountText": "34",
+        "commentsToken": "wTeaMock03w:comments:0",
+        "related": ["wTeaMock01g"]
+      },
+      "comments": []
+    }
+  }
+}

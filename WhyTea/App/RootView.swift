@@ -1,48 +1,42 @@
 import SwiftUI
-import WhyTeaYouTube
 
+/// The WhyTea shell: one `TabView` with the sidebar-adaptable style, a sidebar
+/// on iPad that the person can collapse into the floating tab bar, and a tab
+/// bar on iPhone. Each tab wraps its section's own `NavigationStack`, so the
+/// hierarchy is never rebuilt when the width changes.
+///
+/// Followed channels get a sidebar-only `TabSection` directly beneath
+/// Following once local follows exist; until then there is nothing to list,
+/// and an empty section header would be a placeholder, so none is shown.
 struct RootView: View {
-    @State private var path: [AppRoute] = []
-    @State private var isOpeningLink = false
+    @Environment(NavigationStore.self) private var navigation
 
     var body: some View {
-        NavigationStack(path: $path) {
-            SearchScreen()
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Open Link", systemImage: "link", action: openLink)
-                    }
+        @Bindable var navigation = navigation
+        TabView(selection: $navigation.selection) {
+            ForEach(AppSection.allCases) { section in
+                Tab(section.title, systemImage: section.systemImage, value: section, role: section.tabRole) {
+                    SectionNavigationStack(section: section)
                 }
-                .withWhyTeaDestinations()
-        }
-        .sheet(isPresented: $isOpeningLink) {
-            OpenLinkSheet(onOpen: open)
-        }
-        .onOpenURL(perform: handleOpenURL)
-        #if DEBUG
-        .task {
-            if let url = DebugLaunchArguments.openURL {
-                handleOpenURL(url)
+                .accessibilityHint(Text(section.accessibilityHint))
+                .accessibilityIdentifier(section.accessibilityIdentifier)
+                .hidden(navigation.isHidden(section))
             }
         }
-        #endif
+        .tabViewStyle(.sidebarAdaptable)
+        .sheet(item: $navigation.sheet, content: SheetDestinationView.init)
+        .onOpenURL(perform: handleOpenURL)
     }
 
-    private func openLink() {
-        isOpeningLink = true
-    }
-
-    private func open(_ id: VideoID) {
-        isOpeningLink = false
-        path.append(.video(id))
-    }
-
-    /// `whytea://` followed by a video ID or any YouTube link minus its scheme,
-    /// e.g. `whytea://youtu.be/dQw4w9WgXcQ`.
     private func handleOpenURL(_ url: URL) {
-        let link = url.absoluteString.replacing(/^whytea:\/\//.ignoresCase(), with: "")
-        if let id = VideoID(parsing: link) {
-            open(id)
-        }
+        navigation.handle(url)
     }
 }
+
+#if DEBUG
+#Preview {
+    RootView()
+        .environment(NavigationStore())
+        .environment(\.youTubeService, FixtureYouTubeService())
+}
+#endif

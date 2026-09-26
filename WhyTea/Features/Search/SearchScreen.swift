@@ -1,29 +1,35 @@
 import SwiftUI
+import WhyTeaYouTube
 
 struct SearchScreen: View {
-    @State private var model = SearchModel()
+    @Environment(NavigationStore.self) private var navigation
+    @State private var model: SearchModel
     @State private var submission = SearchSubmission()
+
+    init(service: any YouTubeService) {
+        model = SearchModel(client: service)
+    }
 
     var body: some View {
         content
-            .navigationTitle("why tea")
-            .searchable(text: $model.query, prompt: "Search YouTube")
+            .navigationTitle(Text(AppSection.search.title))
+            // Always shown: in compact width the search tab otherwise tucks
+            // the field under the large title until the list is pulled down.
+            .searchable(text: $model.query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search YouTube")
             .searchSuggestions {
                 ForEach(model.suggestions, id: \.self) { suggestion in
                     Text(suggestion).searchCompletion(suggestion)
                 }
             }
             .onSubmit(of: .search, submit)
-            .task(id: model.query) { await model.updateSuggestions() }
-            .task(id: submission) { await model.search(submission.query) }
-            #if DEBUG
-            .task {
-                if let query = DebugLaunchArguments.searchQuery {
-                    model.query = query
-                    submit()
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Open Link", systemImage: "link", action: openLink)
                 }
             }
-            #endif
+            .task(id: model.query) { await model.updateSuggestions() }
+            .task(id: submission) { await model.search(submission) }
+            .onChange(of: navigation.searchRequest, initial: true, runRequest)
     }
 
     @ViewBuilder
@@ -59,4 +65,24 @@ struct SearchScreen: View {
     private func retrySearch() {
         submission = submission.resubmitted(query: submission.query)
     }
+
+    private func openLink() {
+        navigation.present(.openLink())
+    }
+
+    private func runRequest(_: SearchRequest?, _ request: SearchRequest?) {
+        guard let request else { return }
+        navigation.consume(request)
+        model.query = request.query
+        submit()
+    }
 }
+
+#if DEBUG
+#Preview {
+    NavigationStack {
+        SearchScreen(service: FixtureYouTubeService())
+    }
+    .environment(NavigationStore())
+}
+#endif

@@ -53,9 +53,15 @@ let package = Package(
             ],
             swiftSettings: swift63Settings
         ),
+        // The vendored modules are listed only for the live capability
+        // baseline, which measures upstream behavior below the facade.
         .testTarget(
             name: "WhyTeaYouTubeTests",
-            dependencies: ["WhyTeaYouTube"],
+            dependencies: [
+                "WhyTeaYouTube",
+                "YouTubeStreams",
+                "YouTubeAPI"
+            ],
             swiftSettings: swift63Settings
         )
     ],

@@ -14,22 +14,30 @@ final class VideoModel {
     private(set) var loadAttempt = 0
 
     @ObservationIgnored private var isLoadingComments = false
-    @ObservationIgnored private let client: YouTubeClient
+    @ObservationIgnored private let client: any YouTubeService
 
-    init(id: VideoID, client: YouTubeClient = YouTubeClient()) {
+    init(id: VideoID, client: any YouTubeService) {
         self.id = id
         self.client = client
     }
 
     /// Idempotent: the screen's `.task` re-runs on every appearance (e.g. after
     /// popping back from a related video), so only unfinished work restarts.
+    /// Failed work stays failed until `retry()` reopens it.
     func load() async {
         async let details: Void = loadDetailsIfNeeded()
         async let playback: Void = preparePlaybackIfNeeded()
         _ = await (details, playback)
     }
 
+    /// Reopens whatever failed, then restarts the screen's load task.
     func retry() {
+        if case .failed = details {
+            details = .loading
+        }
+        if case .failed = playback {
+            playback = .resolving
+        }
         loadAttempt += 1
     }
 
@@ -48,8 +56,8 @@ final class VideoModel {
             try Task.checkCancellation()
             comments = comments.appendingUnique(page.comments)
             commentsToken = page.continuationToken
-        } catch is CancellationError {
         } catch {
+            guard !error.isCancellation else { return }
             commentsError = error.localizedDescription
         }
     }
@@ -59,30 +67,28 @@ final class VideoModel {
     }
 
     private func loadDetailsIfNeeded() async {
-        if case .loaded = details { return }
-        details = .loading
+        guard case .loading = details else { return }
         do {
             let loaded = try await client.details(for: id)
             try Task.checkCancellation()
             details = .loaded(loaded)
             commentsToken = loaded.commentsToken
-        } catch is CancellationError {
         } catch {
+            guard !error.isCancellation else { return }
             details = .failed(error.localizedDescription)
         }
     }
 
     private func preparePlaybackIfNeeded() async {
-        if case .ready = playback { return }
-        playback = .resolving
+        guard case .resolving = playback else { return }
         do {
             let source = try await client.playbackSource(for: id)
             try Task.checkCancellation()
             let player = AVPlayer(url: source.url)
             playback = .ready(player, source.kind)
             player.play()
-        } catch is CancellationError {
         } catch {
+            guard !error.isCancellation else { return }
             playback = .failed(error.localizedDescription)
         }
     }

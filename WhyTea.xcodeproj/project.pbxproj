@@ -10,12 +10,23 @@
 		7EA000000000000000000010 /* WhyTeaYouTube in Frameworks */ = {isa = PBXBuildFile; productRef = 7EA000000000000000000011 /* WhyTeaYouTube */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7EA000000000000000000037 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7EA000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7EA000000000000000000006;
+			remoteInfo = WhyTea;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7EA000000000000000000004 /* WhyTea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhyTea.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EA000000000000000000030 /* WhyTeaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhyTeaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7EA000000000000000000013 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		7EA000000000000000000013 /* Exceptions for "WhyTea" folder in "WhyTea" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -25,7 +36,19 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7EA000000000000000000005 /* WhyTea */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (7EA000000000000000000013 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); path = WhyTea; sourceTree = "<group>"; };
+		7EA000000000000000000005 /* WhyTea */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7EA000000000000000000013 /* Exceptions for "WhyTea" folder in "WhyTea" target */,
+			);
+			path = WhyTea;
+			sourceTree = "<group>";
+		};
+		7EA000000000000000000031 /* WhyTeaTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WhyTeaTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +60,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7EA000000000000000000034 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -44,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				7EA000000000000000000005 /* WhyTea */,
+				7EA000000000000000000031 /* WhyTeaTests */,
 				7EA000000000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				7EA000000000000000000004 /* WhyTea.app */,
+				7EA000000000000000000030 /* WhyTeaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +114,27 @@
 			productReference = 7EA000000000000000000004 /* WhyTea.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7EA000000000000000000032 /* WhyTeaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EA000000000000000000038 /* Build configuration list for PBXNativeTarget "WhyTeaTests" */;
+			buildPhases = (
+				7EA000000000000000000033 /* Sources */,
+				7EA000000000000000000034 /* Frameworks */,
+				7EA000000000000000000035 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7EA000000000000000000036 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7EA000000000000000000031 /* WhyTeaTests */,
+			);
+			name = WhyTeaTests;
+			productName = WhyTeaTests;
+			productReference = 7EA000000000000000000030 /* WhyTeaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -94,6 +147,10 @@
 				TargetAttributes = {
 					7EA000000000000000000006 = {
 						CreatedOnToolsVersion = 27.0;
+					};
+					7EA000000000000000000032 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 7EA000000000000000000006;
 					};
 				};
 			};
@@ -115,12 +172,20 @@
 			projectRoot = "";
 			targets = (
 				7EA000000000000000000006 /* WhyTea */,
+				7EA000000000000000000032 /* WhyTeaTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7EA000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7EA000000000000000000035 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -137,7 +202,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7EA000000000000000000033 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7EA000000000000000000036 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7EA000000000000000000006 /* WhyTea */;
+			targetProxy = 7EA000000000000000000037 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7EA00000000000000000001E /* Debug */ = {
@@ -234,6 +314,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_SOURCE_FILE_NAMES = catalog.json;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhyTea/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "why tea";
@@ -258,6 +339,42 @@
 			};
 			name = Release;
 		};
+		7EA000000000000000000039 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.connor.whytea.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_NONISOLATED_NONSENDING_BY_DEFAULT = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhyTea.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WhyTea";
+			};
+			name = Debug;
+		};
+		7EA00000000000000000003A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.connor.whytea.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_NONISOLATED_NONSENDING_BY_DEFAULT = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhyTea.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WhyTea";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -275,6 +392,15 @@
 			buildConfigurations = (
 				7EA000000000000000000021 /* Debug */,
 				7EA000000000000000000022 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EA000000000000000000038 /* Build configuration list for PBXNativeTarget "WhyTeaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EA000000000000000000039 /* Debug */,
+				7EA00000000000000000003A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

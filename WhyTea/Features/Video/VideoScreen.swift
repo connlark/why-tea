@@ -4,8 +4,8 @@ import WhyTeaYouTube
 struct VideoScreen: View {
     @State private var model: VideoModel
 
-    init(id: VideoID) {
-        _model = State(initialValue: VideoModel(id: id))
+    init(id: VideoID, service: any YouTubeService) {
+        model = VideoModel(id: id, client: service)
     }
 
     var body: some View {
